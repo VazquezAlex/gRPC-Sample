@@ -9,3 +9,16 @@ exports.greet = (call, callback) => {
     // The callback sends the response, first we send the error then the response.
     callback(null, res);
 }
+
+exports.greetManyTimes = (call, callback) => {
+    console.log('GreetManyTimes was invoked.');
+
+    const res = new pb.GreetResponse();
+
+    for (let i = 0; i < 10; i++) {
+        res.setResult(`Hello ${ call.request.getFirstName() } - number ${ i + 1 }`);
+        call.write(res);
+    }
+
+    call.end();
+}
